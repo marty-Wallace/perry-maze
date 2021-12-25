@@ -4,7 +4,7 @@ import {
   getDimensions,
   getGamemodeInfo
 } from '../Game/gameSettings';
-import { BLACK, GOLD, GRAY, WHITE } from '../Common/colours';
+import { BLACK, GOLD, WHITE } from '../Common/colours';
 import { GESTURES, gestureDetection } from '../Game/gestures';
 
 export default class MainMenu extends Phaser.Scene {
