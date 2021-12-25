@@ -45,26 +45,6 @@ export const GAMEMODES = {
     scene: 'GamemodeSolo',
     text: 'Solo'
   },
-  TWO_PLAYER: {
-    id: 1,
-    scene: 'GamemodeTwoPlayer',
-    text: 'Two Player'
-  },
-  RACE: {
-    id: 2,
-    scene: 'GamemodeRace',
-    text: 'Race'
-  },
-  CHASE: {
-    id: 3,
-    scene: 'GamemodeChase',
-    text: 'Chase'
-  },
-  ESCAPE: {
-    id: 4,
-    scene: 'GamemodeEscape',
-    text: 'Escape'
-  }
 };
 
 /**
@@ -75,14 +55,6 @@ export const GAMEMODES = {
 export function getGamemodeInfo(id) {
   if (id === 0) {
     return GAMEMODES.SOLO;
-  } else if (id === 1) {
-    return GAMEMODES.TWO_PLAYER;
-  } else if (id === 2) {
-    return GAMEMODES.RACE;
-  } else if (id === 3) {
-    return GAMEMODES.CHASE;
-  } else if (id === 4) {
-    return GAMEMODES.ESCAPE;
   } else {
     return {};
   }
@@ -114,10 +86,10 @@ export function initSettings() {
   return {
     maxGridSize: 100,
     minGridSize: 4,
-    gridSize: 4,
+    gridSize: 45,
     maxSideLength: 15,
     minSideLength: 1,
-    sideLength: 5,
+    sideLength: 3,
     gameMode: GAMEMODES.SOLO.id
   };
 }

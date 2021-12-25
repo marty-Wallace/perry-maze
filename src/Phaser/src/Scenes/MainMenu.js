@@ -47,7 +47,7 @@ export default class MainMenu extends Phaser.Scene {
     let title = this.add.text(
       this.gameDimensions.screenCenter,
       this.gameDimensions.screenSpaceUnit * 4,
-      'Save Perry',
+      'Solve the Maze to Unlock Perry',
       {
         fontFamily: 'Ubuntu',
         fill: BLACK,
@@ -58,7 +58,7 @@ export default class MainMenu extends Phaser.Scene {
     let startGame = this.add.text(
       this.gameDimensions.screenCenter,
       this.gameDimensions.screenSpaceUnit * 8,
-      'Start Game',
+      'Press Enter to Start',
       {
         fontFamily: 'Ubuntu',
         fill: GOLD,
@@ -67,32 +67,32 @@ export default class MainMenu extends Phaser.Scene {
     );
     startGame.setOrigin(0.5, 0.5);
     // TODO: disable
-    let settings = this.add.text(
-      this.gameDimensions.screenCenter,
-      this.gameDimensions.screenSpaceUnit * 12,
-      'Settings',
-      {
-        fontFamily: 'Ubuntu',
-        fill: BLACK,
-        fontSize: this.gameDimensions.textSize3
-      }
-    );
-    settings.setOrigin(0.5, 0.5);
-    let exit = this.add.text(
-      this.gameDimensions.screenCenter,
-      this.gameDimensions.screenSpaceUnit * 16,
-      'Exit',
-      {
-        fontFamily: 'Ubuntu',
-        fill: GRAY,
-        fontSize: this.gameDimensions.textSize3
-      }
-    );
-    exit.setOrigin(0.5, 0.5);
+    // let settings = this.add.text(
+    //   this.gameDimensions.screenCenter,
+    //   this.gameDimensions.screenSpaceUnit * 12,
+    //   'Settings',
+    //   {
+    //     fontFamily: 'Ubuntu',
+    //     fill: BLACK,
+    //     fontSize: this.gameDimensions.textSize3
+    //   }
+    // );
+    // settings.setOrigin(0.5, 0.5);
+    // let exit = this.add.text(
+    //   this.gameDimensions.screenCenter,
+    //   this.gameDimensions.screenSpaceUnit * 16,
+    //   'Exit',
+    //   {
+    //     fontFamily: 'Ubuntu',
+    //     fill: GRAY,
+    //     fontSize: this.gameDimensions.textSize3
+    //   }
+    // );
+    // exit.setOrigin(0.5, 0.5);
 
     this.options = [
       { text: startGame, scene: getGamemodeInfo(this.settings.gameMode).scene },
-      { text: settings, scene: 'Settings' }
+      // { text: settings, scene: 'Settings' }
       // { text: exit, scene: 'Null' }
     ];
   }

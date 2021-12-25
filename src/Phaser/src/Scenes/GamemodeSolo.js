@@ -15,6 +15,14 @@ export default class GamemodeSolo extends Phaser.Scene {
         this.handleGesture = this.handleGesture.bind(this);
         this.actionClock = 0;
         this.actionCooldown = 100; // Time in milliseconds
+        this.cam = this.cameras.main;
+        this.rotation = 0;
+        this.state = 'normal';
+        this.flip = false;
+        this.original = {
+            x: this.cam.x,
+            y: this.cam.y,
+        }
     }
 
     preload() {
@@ -99,6 +107,10 @@ export default class GamemodeSolo extends Phaser.Scene {
     updateMovement(direction) {
         // Move the character
         this.character.moveCharacter(direction);
+
+        if( this.state === 'shake') {
+            this.cam.pan(this.character.position.x * this.maze.sideLength -1, this.character.position.y * this.maze.sideLength -1);
+        }
         // Check if player is in the finish position, if yes, finish game
         this.endPoints.forEach(endPoint => {
             if (
@@ -108,6 +120,10 @@ export default class GamemodeSolo extends Phaser.Scene {
                 this.combo[endPoint.clue.pos - 1] = endPoint.clue.num
 
                 if (!endPoint.found) {
+                    if(this.state === 'shake') {
+                        this.state = 'finished';
+                        this.cameras.resetAll();
+                    }
                     this.rexUI.modalPromise(
                         this.createDialog(this, endPoint).setPosition(400, 400),
                         {
@@ -117,7 +133,17 @@ export default class GamemodeSolo extends Phaser.Scene {
                                 out: 500
                             }
                         }
-                    );
+                    ).then(() => {
+                        if( this.state === 'normal') {
+                            this.cam.zoomTo(0.75);
+                            this.state = 'rotate';
+                        } else if( this.state === 'rotate') {
+                            this.cam.zoomTo(1.5);
+                            this.cam.pan(this.character.position.x * this.maze.sideLength -1, this.character.position.y * this.maze.sideLength -1);
+                            this.state = 'shake';
+                        }
+
+                    });
                 }
 
                 endPoint.found = true;
@@ -130,7 +156,7 @@ export default class GamemodeSolo extends Phaser.Scene {
     createDialog(scene, endPoint) {
         const dialog = scene.rexUI.add.dialog({
             background: scene.rexUI.add.roundRectangle(400, 400, 400, 100, 20, 0x1565c0),
-            content: scene.add.text(0, 0, `Combo #${endPoint.clue.pos} is ${endPoint.clue.num}`, {
+            content: scene.add.text(0, 0, `Combination #${endPoint.clue.pos} is ${endPoint.clue.num}`, {
                 fontSize: '24px'
             }),
 
@@ -200,6 +226,13 @@ export default class GamemodeSolo extends Phaser.Scene {
     update(time, delta) {
         if (Phaser.Input.Keyboard.JustDown(this.keys.exit)) {
             this.scene.start('MainMenu', this.settings);
+        }
+
+        if(this.state === 'rotate') {
+            this.cam.rotateTo(this.rotation += 0.005, true, this.actionCooldown * 6)
+        }
+        if(this.state === 'shake' ) {
+            this.cam.rotateTo((this.rotation += 0.015), true, this.actionCooldown * 6)
         }
 
         if (new Date().getTime() - this.actionClock > this.actionCooldown) {

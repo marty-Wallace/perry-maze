@@ -13,13 +13,13 @@ export default class Game extends React.Component {
       type: Phaser.AUTO,
       parent: 'phaser-parent',
       pixelArt: true,
-      width: dimension * 0.9,
-      height: dimension * 0.9,
+      width: dimension * 0.99,
+      height: dimension * 0.99,
       physics: {
         default: 'arcade',
         arcade: {
-          gravity: { y: 200 }
-        }
+          gravity: { y: 200, },
+        },
       },
       input: {
         activePointers: 5 // Set the number of allowed active pointers
