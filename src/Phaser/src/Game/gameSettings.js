@@ -86,7 +86,7 @@ export function initSettings() {
   return {
     maxGridSize: 100,
     minGridSize: 4,
-    gridSize: 45,
+    gridSize: 48,
     maxSideLength: 15,
     minSideLength: 1,
     sideLength: 3,
