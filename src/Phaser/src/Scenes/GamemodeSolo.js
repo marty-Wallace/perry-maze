@@ -19,6 +19,7 @@ export default class GamemodeSolo extends Phaser.Scene {
         this.rotation = 0;
         this.state = 'normal';
         this.flip = false;
+        this.clueCounter = 0;
         this.original = {
             x: this.cam.x,
             y: this.cam.y,
@@ -58,23 +59,26 @@ export default class GamemodeSolo extends Phaser.Scene {
 
         this.combo = [0, 0, 0];
 
+        this.clues = [
+            {pos: 3, num: 35,},
+            {pos: 2, num: 2,},
+            {pos: 1, num: 12},
+        ];
+
         this.endPoints = [
             {
                 x: this.settings.gridSize - 1,
                 y: this.settings.gridSize - 1,
-                clue: {pos: 1, num: 12,},
                 found: false,
             },
             {
                 x: this.settings.gridSize - 1,
                 y: 0,
-                clue: {pos: 2, num: 2,},
                 found: false,
             },
             {
                 x: 0,
                 y: this.settings.gridSize - 1,
-                clue: {pos: 3, num: 35,},
                 found: false,
             }
         ];
@@ -117,15 +121,16 @@ export default class GamemodeSolo extends Phaser.Scene {
                 this.character.position.x === endPoint.x &&
                 this.character.position.y === endPoint.y
             ) {
-                this.combo[endPoint.clue.pos - 1] = endPoint.clue.num
 
                 if (!endPoint.found) {
+                    const clue = this.clues[this.clueCounter++];
+                    this.combo[clue.pos - 1] = clue.num
                     if(this.state === 'shake') {
                         this.state = 'finished';
                         this.cameras.resetAll();
                     }
                     this.rexUI.modalPromise(
-                        this.createDialog(this, endPoint).setPosition(400, 400),
+                        this.createDialog(this, endPoint, clue).setPosition(400, 400),
                         {
                             manualClose: true,
                             duration: {
@@ -153,10 +158,10 @@ export default class GamemodeSolo extends Phaser.Scene {
 
     }
 
-    createDialog(scene, endPoint) {
+    createDialog(scene, endPoint, clue) {
         const dialog = scene.rexUI.add.dialog({
             background: scene.rexUI.add.roundRectangle(400, 400, 400, 100, 20, 0x1565c0),
-            content: scene.add.text(0, 0, `Combination #${endPoint.clue.pos} is ${endPoint.clue.num}`, {
+            content: scene.add.text(0, 0, `Combination #${clue.pos} is ${clue.num}`, {
                 fontSize: '24px'
             }),
 
