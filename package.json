@@ -11,7 +11,7 @@
   },
   "scripts": {
     "start": "npm run clean-phaser && react-scripts start",
-    "build": "npm run clean-phaser && react-scripts build",
+    "build": "GENERATE_SOURCEMAP=false npm run clean-phaser && react-scripts build",
     "test": "react-scripts test",
     "prettify": "prettier \"src/**/*.js\" --write",
     "lint": "eslint \"src/**/*.js\"",
